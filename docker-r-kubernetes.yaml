@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-r-demo
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: shiny
+  template:
+    metadata:
+      labels:
+        service: shiny
+    spec:
+      containers:
+       - name: shimy-service
+         image: DOCKER_USERNAME/REPO_NAME
+         imagePullPolicy: Always
+         env:
+          - name: POSTGRES_PASSWORD
+            value: mysecretpassword
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    service: shiny
+  ports:
+  - port: 3838
+    targetPort: 3838
+    nodePort: 30001
