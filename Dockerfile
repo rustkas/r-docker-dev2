@@ -1,6 +1,6 @@
 # Use an official R runtime as a parent image
 # The 4.1.2 version is choosen for compatibility with libpq-dev library
-FROM r-base:4.1.2 
+FROM r-base:latest 
 
 # Install required libraries
 RUN apt update
